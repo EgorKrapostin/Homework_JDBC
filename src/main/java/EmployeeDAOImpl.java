@@ -76,11 +76,31 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 
     @Override
     public void updateEmployee(Employee employee) {
+        try (final Connection connection = DriverManager.getConnection(url, user, password);
+             PreparedStatement statement = connection.prepareStatement("UPDATE employee SET first_name=?,last_name=?,gender=?,age=? WHERE id =?")) {
+            statement.setString(1,employee.getFirst_name());
+            statement.setString(2,employee.getLast_name());
+            statement.setString(3,employee.getGender());
+            statement.setInt(4,employee.getAge());
+            statement.setInt(5,employee.getId());
+            int resultSet = statement.executeUpdate();
+            System.out.println("Сотрудник обновлен");
+        } catch (SQLException e) {
+            System.out.println("Ошибка при подключении к БД!");
+            e.printStackTrace();
+        }
 
     }
 
     @Override
     public void deleteEmployee(int id) {
-
+        try (final Connection connection = DriverManager.getConnection(url, user, password);
+             PreparedStatement statement = connection.prepareStatement("DELETE FROM employee WHERE id ="+id)){
+            int resultSet = statement.executeUpdate();
+            System.out.println("Сотрудник удален");
+        } catch (SQLException e) {
+            System.out.println("Ошибка при подключении к БД!");
+            e.printStackTrace();
+        }
     }
 }
