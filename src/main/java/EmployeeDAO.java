@@ -9,5 +9,5 @@ public interface EmployeeDAO {
 
     void updateEmployee(Employee employee);
 
-    void deleteEmployee(int id);
+    void deleteEmployee(Employee employee);
 }
