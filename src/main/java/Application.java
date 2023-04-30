@@ -11,16 +11,23 @@ import java.util.List;
 public class Application {
     public static void main(String[] args) {
 
-        Employee employee = new Employee("Петр", "Петров", "м", 33, 5);
         EmployeeDAO employeeDAO = new EmployeeDAOImpl();
+        CityDAO cityDAO = new CityDAOImpl();
 
-        employeeDAO.getAllEmployees();
-        System.out.println(employeeDAO.getEmployeeById(1));
-        employeeDAO.createEmployee(employee);
-        employeeDAO.getAllEmployees();
-        employee.setAge(44);
-        employeeDAO.updateEmployee(employee);
-        employeeDAO.deleteEmployee(employee);
-        employeeDAO.getAllEmployees();
+        City city = new City();
+        city.setCityName("Волгоград");
+
+        Employee employee = new Employee("Иван4", "Иванов4", "м", 34);
+        Employee employee1 = new Employee("Иван5", "Иванов5", "м", 35);
+        Employee employee2 = new Employee("Иван6", "Иванов6", "м", 36);
+        List<Employee> employees = List.of(employee, employee1, employee2);
+
+        cityDAO.createCity(city);
+        city.setEmployees(employees);
+        cityDAO.updateCity(city);
+        cityDAO.deleteCity(city);
+
+
+
     }
 }

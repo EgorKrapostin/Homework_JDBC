@@ -23,7 +23,6 @@ public class EmployeeDAOImpl implements EmployeeDAO{
             System.out.println("Employee lastName: " + employee.getLastName());
             System.out.println("Employee age: " + employee.getAge());
             System.out.println("Employee gender: " + employee.getGender());
-            System.out.println("Employee cityId: " + employee.getCityId());
             System.out.println("------------");
         }
 
@@ -32,8 +31,7 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 
     @Override
     public Employee getEmployeeById(int id) {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myPersistenceUnit");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityManager entityManager = createEntityManager();
 
         return entityManager.find(Employee.class, id);
 
@@ -41,8 +39,7 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 
     @Override
     public void createEmployee(Employee employee) {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myPersistenceUnit");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityManager entityManager = createEntityManager();
 
         entityManager.getTransaction().begin();
         entityManager.persist(employee);
@@ -51,8 +48,7 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 
     @Override
     public void updateEmployee(Employee employee) {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myPersistenceUnit");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityManager entityManager = createEntityManager();
 
         entityManager.getTransaction().begin();
         entityManager.merge(employee);
@@ -61,11 +57,16 @@ public class EmployeeDAOImpl implements EmployeeDAO{
 
     @Override
     public void deleteEmployee(Employee employee) {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myPersistenceUnit");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityManager entityManager = createEntityManager();
 
         entityManager.getTransaction().begin();
         entityManager.remove(employee);
         entityManager.getTransaction().commit();
+    }
+
+    private static EntityManager createEntityManager() {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myPersistenceUnit");
+
+        return entityManagerFactory.createEntityManager();
     }
 }
